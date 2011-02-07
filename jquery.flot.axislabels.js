@@ -108,6 +108,7 @@ Released under the GPLv3 license by Xuan Luo, September 2010.
                         // HTML text
                         plot.getPlaceholder().find('#' + axisName + 'Label').remove();
                         var elem = $('<div id="' + axisName + 'Label" " class="axisLabels" style="position:absolute;">' + opts.axisLabel + '</div>');
+                        plot.getPlaceholder().append(elem);
                         if (axisName.charAt(0) == 'x') {
                             elem.css('left', plot.getPlotOffset().left + plot.width()/2 - elem.outerWidth()/2 + 'px');
                             elem.css('bottom', '0px');
@@ -115,7 +116,6 @@ Released under the GPLv3 license by Xuan Luo, September 2010.
                             elem.css('top', plot.getPlotOffset().top + plot.height()/2 - elem.outerHeight()/2 + 'px');
                             elem.css('left', '0px');
                         }
-                        plot.getPlaceholder().append(elem);
                     }
                 });
                 secondPass = false;
