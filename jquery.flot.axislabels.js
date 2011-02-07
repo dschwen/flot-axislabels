@@ -107,7 +107,7 @@ Released under the GPLv3 license by Xuan Luo, September 2010.
                     } else {
                         // HTML text
                         plot.getPlaceholder().find('#' + axisName + 'Label').remove();
-                        var elem = $('<div id="' + axisName + 'Label" " class="axisLabels" style="position:absolute;">' + opts.axisLabel + '</div>');
+                        var elem = $('<div class="axisLabels ' + axisName + 'Label" style="position:absolute;">' + opts.axisLabel + '</div>');
                         plot.getPlaceholder().append(elem);
                         if (axisName.charAt(0) == 'x') {
                             elem.css('left', plot.getPlotOffset().left + plot.width()/2 - elem.outerWidth()/2 + 'px');
