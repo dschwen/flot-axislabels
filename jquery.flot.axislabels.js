@@ -29,6 +29,10 @@ Released under the GPLv3 license by Xuan Luo, September 2010.
         // the first time to get the tick measurements, so that we can change
         // them, and then have it draw it again.
         var secondPass = false;
+        var transforms = '-moz-transform: rotate(-90deg);'
+                       + '-webkit-transform: rotate(-90deg);'
+                       + '-o-transform: rotate(-90deg);'
+                       + 'filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);';
         plot.hooks.draw.push(function (plot, ctx) {
             if (!secondPass) {
                 // MEASURE AND SET OPTIONS
@@ -55,10 +59,15 @@ Released under the GPLv3 license by Xuan Luo, September 2010.
 
                     } else {
                         // HTML text
-                        var elem = $('<div class="axisLabels" style="position:absolute;">' + opts.axisLabel + '</div>');
+                        var elem = $('<div class="axisLabels" style="position:absolute;' + transforms + '">' + opts.axisLabel + '</div>');
                         plot.getPlaceholder().append(elem);
-                        w = elem.outerWidth(true);
-                        h = elem.outerHeight(true);
+                        if (axisName.charAt(0) == 'x') {
+                          w = elem.outerWidth(true);
+                          h = elem.outerHeight(true);
+                        } else {
+                          h = elem.outerWidth(true);
+                          w = elem.outerHeight(true);
+                        }
                         elem.remove();
                     }
 
@@ -107,14 +116,16 @@ Released under the GPLv3 license by Xuan Luo, September 2010.
                     } else {
                         // HTML text
                         plot.getPlaceholder().find('#' + axisName + 'Label').remove();
-                        var elem = $('<div class="axisLabels ' + axisName + 'Label" style="position:absolute;">' + opts.axisLabel + '</div>');
+                        var elem = $('<div class="axisLabels ' + axisName + 'Label" style="position:absolute;' +
+                                     ( axisName.charAt(0) == 'x' ? '' : transforms ) +
+                                     '">' + opts.axisLabel + '</div>');
                         plot.getPlaceholder().append(elem);
                         if (axisName.charAt(0) == 'x') {
                             elem.css('left', plot.getPlotOffset().left + plot.width()/2 - elem.outerWidth()/2 + 'px');
                             elem.css('bottom', '0px');
                         } else {
                             elem.css('top', plot.getPlotOffset().top + plot.height()/2 - elem.outerHeight()/2 + 'px');
-                            elem.css('left', '0px');
+                            elem.css('left', '-' + ( elem.outerWidth()/2 - elem.outerHeight()/2 ) + 'px');
                         }
                     }
                 });
